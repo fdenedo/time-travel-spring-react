@@ -1,0 +1,4 @@
+id,provider,time_machine,capacity,date_ranges,single_price,return_price
+FTL0001,FirstTravel,QuantumCorp QM-2000,2,-10000-01-01:1850-01-01,1000000,3000000
+FTL0002,FirstTravel,QuantumCorp QM-4000,4,-3000-01-01:0100-01-01,1800000,4000000
+RWD0001,Rewind,QuantumCorp QM-3000,3,0001-01-01:PRESENT,800000,3200000
