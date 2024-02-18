@@ -1,6 +1,6 @@
 package com.example.timetravelbooks.ttsp;
 
-import com.example.timetravelbooks.model.DateRange;
+import com.example.timetravelbooks.model.AbstractDateRange;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,7 +27,7 @@ public class TimeTravelServiceEntity {
     private int capacity;
 
     @Field(name = "date_ranges")
-    private List<DateRange> dateRanges;
+    private List<AbstractDateRange> dateRanges;
 
     @Field(name = "single_price")
     private double singlePrice;
@@ -40,7 +40,7 @@ public class TimeTravelServiceEntity {
             TimeTravelServiceProviderEntity provider,
             TimeMachineEntity timeMachine,
             int capacity,
-            List<DateRange> dateRanges,
+            List<AbstractDateRange> dateRanges,
             double singlePrice,
             double returnPrice
     ) {
@@ -54,14 +54,14 @@ public class TimeTravelServiceEntity {
             ));
         }
 
-        List<DateRange> rangesNotSupported = dateRangesNotSupportedByMachine(timeMachine, dateRanges);
+        List<AbstractDateRange> rangesNotSupported = dateRangesNotSupportedByMachine(timeMachine, dateRanges);
         if (!rangesNotSupported.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             sb.append(String.format("Time Machine %s %s does not support the following date ranges provided:",
                     timeMachine.getMake(),
                     timeMachine.getModel()
             ));
-            for (DateRange dr : rangesNotSupported) {
+            for (AbstractDateRange dr : rangesNotSupported) {
                 sb.append("\n\t").append(dr.toString());
             }
 
@@ -93,7 +93,7 @@ public class TimeTravelServiceEntity {
         return capacity;
     }
 
-    public List<DateRange> getDateRanges() {
+    public List<AbstractDateRange> getDateRanges() {
         return dateRanges;
     }
 
@@ -106,7 +106,7 @@ public class TimeTravelServiceEntity {
     }
 
     public boolean hasDateRangeSatisfyingArrivalDate(LocalDate date) {
-        for (DateRange dateRange : dateRanges) {
+        for (AbstractDateRange dateRange : dateRanges) {
             if (dateRange.containsDate(date)) return true;
         }
         return false;
@@ -116,9 +116,9 @@ public class TimeTravelServiceEntity {
         return capacity <= tm.getMaxCapacity();
     }
 
-    private List<DateRange> dateRangesNotSupportedByMachine(TimeMachineEntity tm, List<DateRange> dateRanges) {
-        List<DateRange> unsupported = new ArrayList<>();
-        for (DateRange dateRange : dateRanges) {
+    private List<AbstractDateRange> dateRangesNotSupportedByMachine(TimeMachineEntity tm, List<AbstractDateRange> dateRanges) {
+        List<AbstractDateRange> unsupported = new ArrayList<>();
+        for (AbstractDateRange dateRange : dateRanges) {
             if (!tm.getDateRange().fullyContainsDateRange(dateRange)) unsupported.add(dateRange);
         }
         return unsupported;
