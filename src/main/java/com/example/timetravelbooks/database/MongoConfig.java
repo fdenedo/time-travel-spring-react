@@ -1,5 +1,6 @@
 package com.example.timetravelbooks.database;
 
+import com.mongodb.lang.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -11,6 +12,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.database}")
     private String databaseName;
 
+    @NonNull
     @Override
     public String getDatabaseName() {
         return this.databaseName;
