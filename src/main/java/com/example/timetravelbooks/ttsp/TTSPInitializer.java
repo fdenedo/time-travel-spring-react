@@ -1,9 +1,13 @@
 package com.example.timetravelbooks.ttsp;
 
+import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,33 +28,20 @@ public class TTSPInitializer {
     }
 
     private List<TimeTravelServiceProviderEntity> createTTSPs() {
-        List<TimeTravelServiceProviderEntity> ttsps = new ArrayList<>();
-
-        TimeTravelServiceProviderEntity ttsp1 = new TimeTravelServiceProviderEntity(
-                "1",
-                "Rewind",
-                """
-                Whether you are looking to remember events in your childhood, relive past events, or \
-                correct past wrongs, Rewind is the provider for you!
-                """,
-                new ArrayList<>(),
-                new ArrayList<>()
-        );
-        ttsps.add(ttsp1);
-
-        TimeTravelServiceProviderEntity ttsp2 = new TimeTravelServiceProviderEntity(
-                "2",
-                "FirstTravel",
-                """
-                Technically founded in 8000 BC, FirstTravel specialises in luxury jaunts for people who wish to have an \
-                incredible one-of-a-kind experience. Go back in time and see how your ancestors used to dance, or see \
-                how the future will unfold.
-                """,
-                new ArrayList<>(),
-                new ArrayList<>()
-        );
-        ttsps.add(ttsp2);
-
-        return ttsps;
+        try (InputStream serviceprovidersFileAsStream = getClass().getResourceAsStream("/static/ttsprovider.csv")) {
+            if (serviceprovidersFileAsStream == null) throw new NullPointerException("Could not find CSV file for service providers");
+            Reader reader = new InputStreamReader(serviceprovidersFileAsStream);
+            return new CsvToBeanBuilder<TTSPCsvRepr>(reader)
+                    .withType(TTSPCsvRepr.class)
+                    .build()
+                    .parse()
+                    .stream().map(TTSPCsvRepr::toEntity)
+                    .toList();
+        } catch (Exception e) {
+            System.out.println("Error reading CSV file for time travel services:");
+            // TODO: Look into adding more robust logging
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }
