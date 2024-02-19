@@ -16,30 +16,31 @@ public class DateRangeConverters {
     private static final String PRESENT = "PRESENT";
 
     @WritingConverter
-    public enum DateRangeToStringArrayConverter implements Converter<AbstractDateRange, String[]> {
+    public enum DateRangeToStringConverter implements Converter<AbstractDateRange, String> {
         INSTANCE;
 
         @NonNull
         @Override
-        public String[] convert(AbstractDateRange source) {
+        public String convert(AbstractDateRange source) {
             String startDate = source instanceof DateRangeFromPresent ? PRESENT : source.getStartDate().toString();
             String endDate = source instanceof DateRangeToPresent ? PRESENT : source.getEndDate().toString();
 
-            return new String[]{startDate, endDate};
+            return String.join(":", startDate, endDate);
         }
     }
 
     @ReadingConverter
-    public enum StringArrayToDateRangeConverter implements Converter<String[], AbstractDateRange> {
+    public enum StringToDateRangeConverter implements Converter<String, AbstractDateRange> {
         INSTANCE;
 
         @NonNull
         @Override
-        public AbstractDateRange convert(String[] source) {
-            if (PRESENT.equals(source[0])) return new DateRangeFromPresent(LocalDate.parse(source[1]));
-            if (PRESENT.equals(source[1])) return new DateRangeToPresent(LocalDate.parse(source[0]));
+        public AbstractDateRange convert(String source) {
+            String[] split = source.split(":");
+            if (PRESENT.equals(split[0])) return new DateRangeFromPresent(LocalDate.parse(split[1]));
+            if (PRESENT.equals(split[1])) return new DateRangeToPresent(LocalDate.parse(split[0]));
 
-            return new DateRange(LocalDate.parse(source[0]), LocalDate.parse(source[1]));
+            return new DateRange(LocalDate.parse(split[0]), LocalDate.parse(split[1]));
         }
     }
 }

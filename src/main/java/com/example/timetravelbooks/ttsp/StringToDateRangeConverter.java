@@ -7,8 +7,7 @@ public class StringToDateRangeConverter extends AbstractCsvConverter {
 
     @Override
     public Object convertToRead(String s) {
-        String[] split = s.split(":", 2);
-        return DateRangeConverters.StringArrayToDateRangeConverter.INSTANCE.convert(split);
+        return DateRangeConverters.StringToDateRangeConverter.INSTANCE.convert(s);
     }
 
 }
