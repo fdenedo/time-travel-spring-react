@@ -9,6 +9,9 @@ import java.time.temporal.TemporalAmount;
 public class JourneyResponse {
 
     @NotNull
+    String serviceId;
+
+    @NotNull
     String providerName;
 
     @NotNull
@@ -36,6 +39,7 @@ public class JourneyResponse {
     double totalPrice;
 
     public JourneyResponse(
+            String serviceId,
             String providerName,
             String timeMachineMakeAndModel,
             LocalDate departureDate,
@@ -47,6 +51,7 @@ public class JourneyResponse {
             int passengers,
             double totalPrice
     ) {
+        this.serviceId = serviceId;
         this.providerName = providerName;
         this.timeMachineMakeAndModel = timeMachineMakeAndModel;
         this.departureDate = departureDate;
@@ -57,6 +62,10 @@ public class JourneyResponse {
         this.targetReturnArrivalDate = targetReturnArrivalDate;
         this.passengers = passengers;
         this.totalPrice = totalPrice;
+    }
+
+    public String getServiceId() {
+        return serviceId;
     }
 
     public String getProviderName() {
