@@ -25,7 +25,9 @@ public class JourneyResponse {
 
     TemporalAmount journeyLength;
 
-    LocalDate targetReturnDate;
+    LocalDate targetReturnDepartureDate;
+
+    LocalDate targetReturnArrivalDate;
 
     @NotNull
     int passengers;
@@ -40,7 +42,8 @@ public class JourneyResponse {
             LocalTime departureTime,
             LocalDate targetArrivalDate,
             TemporalAmount journeyLength,
-            LocalDate targetReturnDate,
+            LocalDate targetReturnDepartureDate,
+            LocalDate targetReturnArrivalDate,
             int passengers,
             double totalPrice
     ) {
@@ -50,7 +53,8 @@ public class JourneyResponse {
         this.departureTime = departureTime;
         this.targetArrivalDate = targetArrivalDate;
         this.journeyLength = journeyLength;
-        this.targetReturnDate = targetReturnDate;
+        this.targetReturnDepartureDate = targetReturnDepartureDate;
+        this.targetReturnArrivalDate = targetReturnArrivalDate;
         this.passengers = passengers;
         this.totalPrice = totalPrice;
     }
@@ -79,8 +83,12 @@ public class JourneyResponse {
         return journeyLength;
     }
 
-    public LocalDate getTargetReturnDate() {
-        return targetReturnDate;
+    public LocalDate getTargetReturnDepartureDate() {
+        return targetReturnDepartureDate;
+    }
+
+    public LocalDate getTargetReturnArrivalDate() {
+        return targetReturnArrivalDate;
     }
 
     public int getPassengers() {

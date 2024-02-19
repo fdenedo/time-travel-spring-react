@@ -18,22 +18,28 @@ public class JourneyManager {
         return LocalTime.of(hour, minute);
     }
 
+    private LocalDate calculateReturnDepartureDate(LocalDate targetArrivalDate, Period journeyLength) {
+        return targetArrivalDate.plus(journeyLength);
+    }
+
     public JourneyResponse createJourneyFromService(
             TimeTravelServiceSummary service,
             LocalDate departureDate,
             LocalDate arrivalDate,
             int passengers,
-            LocalDate returnDate,
+            LocalDate returnArrivalDate,
             Integer journeyLengthInDays
     ) {
-        boolean isReturnJourney = returnDate != null;
+        boolean isReturnJourney = returnArrivalDate != null;
 
         double totalPrice;
         Period journeyLength = null;
+        LocalDate returnDepartureDate = null;
 
         if (isReturnJourney) {
             totalPrice = passengers * service.getReturnPrice();
             journeyLength = Period.ofDays(journeyLengthInDays);
+            returnDepartureDate = calculateReturnDepartureDate(arrivalDate, journeyLength);
         } else {
             totalPrice = passengers * service.getSinglePrice();
         }
@@ -45,7 +51,8 @@ public class JourneyManager {
                 generateRandomTime(),
                 arrivalDate,
                 journeyLength,
-                returnDate,
+                returnDepartureDate,
+                returnArrivalDate,
                 passengers,
                 totalPrice
         );
