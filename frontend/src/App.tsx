@@ -39,7 +39,7 @@ function App() {
       <div className='search-results flex flex-col items-center mt-16'>
         <h1>Journeys</h1>
         {journeys.map(journey =>
-          <div key={journey.departureTime}>
+          <div key={journey.serviceId}>
             <JourneyCard journey={journey} />
           </div>
         )}

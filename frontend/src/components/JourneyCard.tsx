@@ -1,6 +1,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export interface Journey {
+  serviceId: string;
   providerName: string;
   timeMachineMakeAndModel: string;
   departureDate: string;
