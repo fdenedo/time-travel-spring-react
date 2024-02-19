@@ -13,12 +13,14 @@ import java.util.List;
 public class JourneySearchController {
 
     private final TimeTravelServiceRepository repository;
+    private final JourneyManager journeyManager;
 
-    private final JourneyManager manager;
-
-    public JourneySearchController(TimeTravelServiceRepository repository, JourneyManager manager) {
+    public JourneySearchController(
+            TimeTravelServiceRepository repository,
+            JourneyManager journeyManager
+    ) {
         this.repository = repository;
-        this.manager = manager;
+        this.journeyManager = journeyManager;
     }
 
     @GetMapping("/api/journeys")
@@ -29,13 +31,18 @@ public class JourneySearchController {
             @RequestParam(required = false) LocalDate returnDate,
             @RequestParam(required = false) Integer journeyLengthInDays
     ) {
-        List<TimeTravelServiceSummary> services = repository.findByDateRangeAndCapacity(
-                arrivalDate,
-                passengers
-        );
+        LocalDate currentDate = LocalDate.now();
+        List<TimeTravelServiceSummary> services;
 
+        if (arrivalDate.isBefore(currentDate)) {
+            services = repository.findByPastDateRequest(arrivalDate, passengers);
+        } else if (arrivalDate.isAfter(currentDate)) {
+            services = repository.findByFutureDateRequest(arrivalDate, passengers);
+        } else {
+            services = repository.findByPresentDateRequest(arrivalDate, passengers);
+        }
         return services.stream()
-                .map(service -> manager.createJourneyFromService(
+                .map(service -> journeyManager.createJourneyFromService(
                         service,
                         departureDate,
                         arrivalDate,
