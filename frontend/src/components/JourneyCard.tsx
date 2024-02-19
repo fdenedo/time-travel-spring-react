@@ -1,4 +1,5 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "./ui/button";
 
 export interface Journey {
   serviceId: string;
@@ -91,8 +92,9 @@ const JourneyCard = ({ journey }: JourneyProps) => {
               </div>
             }
           </div>
-          <div className="price border-l px-12 flex flex-col justify-center">
+          <div className="price border-l px-12 flex flex-col justify-center space-y-2">
             <p className="text-xl"><span>£</span>{formatPrice(journey.totalPrice)}</p>
+            <Button>View</Button>
           </div>
         </CardContent>
         <CardFooter className="bg-slate-100 flex flex-row items-center p-2 pl-6">
