@@ -21,4 +21,86 @@ public interface TimeTravelServiceRepository extends MongoRepository<TimeTravelS
     @Query("{$and:[{date_ranges: {$elemMatch: {startDate: {$lte: ?0}, endDate: {$gte: ?0}}}}, {capacity: {$gte: ?1}}]}")
     List<TimeTravelServiceSummary> findByDateRangeAndCapacity(LocalDate arrivalDate, int passengers);
 
+    @Query("""
+            {
+              $and: [
+                {
+                  capacity: { $gte: ?1 }
+                },
+                {
+                  date_ranges: {
+                    $elemMatch: {
+                      $or: [
+                        {
+                          startDate: { $lte: ?0 },
+                          endDate: { $gte: ?0 }
+                        },
+                        {
+                          _class: "com.example.timetravelbooks.model.DateRangeToPresent",
+                          startDate: { "$lte": ?0 }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+            """)
+    List<TimeTravelServiceSummary> findByPastDateRequest(LocalDate arrivalDate, int passengers);
+
+    @Query("""
+            {
+              $and: [
+                {
+                  capacity: { $gte: ?1 }
+                },
+                {
+                  date_ranges: {
+                    $elemMatch: {
+                      $or: [
+                        {
+                          startDate: { $lte: ?0 },
+                          endDate: { $gte: ?0 }
+                        },
+                        {
+                          _class: "com.example.timetravelbooks.model.DateRangeFromPresent",
+                          endDate: { $gte: ?0 }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+            """)
+    List<TimeTravelServiceSummary> findByFutureDateRequest(LocalDate arrivalDate, int passengers);
+
+    @Query("""
+            {
+              $and: [
+                {
+                  capacity: { $gte: ?1 }
+                },
+                {
+                  date_ranges: {
+                    $elemMatch: {
+                      $or: [
+                        {
+                          startDate: { $lte: ?0 },
+                          endDate: { $gte: ?0 }
+                        },
+                        {
+                          _class: "com.example.timetravelbooks.model.DateRangeToPresent"
+                        },
+                        {
+                          _class: "com.example.timetravelbooks.model.DateRangeFromPresent"
+                        },
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+            """)
+    List<TimeTravelServiceSummary> findByPresentDateRequest(LocalDate arrivalDate, int passengers);
 }
