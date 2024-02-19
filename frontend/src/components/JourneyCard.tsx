@@ -7,7 +7,8 @@ export interface Journey {
   departureTime: string;
   targetArrivalDate: string;
   journeyLength?: string;
-  targetReturnDate?: string;
+  targetReturnDepartureDate?: string;
+  targetReturnArrivalDate?: string;
   passengers: number;
   totalPrice: number;
 }
@@ -17,12 +18,17 @@ interface JourneyProps {
 }
 
 const JourneyCard = ({ journey }: JourneyProps) => {
-  const isReturnJourney = journey.targetReturnDate !== null || undefined;
-
   const [, dMonth, dDay, dYear] = new Date(journey.departureDate).toDateString().split(' ');
   const dTime = journey.departureTime.split(':').slice(0, -1).join(':');
-
   const [, aMonth, aDay, aYear] = new Date(journey.targetArrivalDate).toDateString().split(' ');
+
+  const isReturnJourney = journey.targetReturnArrivalDate !== null || undefined;
+  const [, rdMonth, rdDay, rdYear] = journey.targetReturnDepartureDate 
+      && new Date(journey.targetReturnDepartureDate).toDateString().split(' ')
+      || [null, null, null, null];
+  const [, raMonth, raDay, raYear] = journey.targetReturnArrivalDate 
+      && new Date(journey.targetReturnArrivalDate).toDateString().split(' ')
+      || [null, null, null, null];
 
   function formatPrice(price: number) {
     let formattedPrice;
@@ -70,18 +76,15 @@ const JourneyCard = ({ journey }: JourneyProps) => {
                 </div>
                 <div className="time-section flex flex-row">
                   <div className="journey-from flex flex-col justify-start">
-                    <p className="text-slate-400">{`${dDay} ${dMonth}`}</p>
-                    <p className="text-2xl">{dYear}</p>
-                    <div className="rounded-lg bg-slate-400 p-[1px] mt-2">
-                      <p className="text-amber-50">{dTime}</p>
-                    </div>
+                    <p className="text-slate-400">{`${rdDay} ${rdMonth}`}</p>
+                    <p className="text-2xl">{rdYear}</p>
                   </div>
                   <div className="separator flex flex-col justify-center items-center mx-6">
                     <div className="h-[2px] w-32 bg-slate-600"></div>
                   </div>
                   <div className="journey-to flex flex-col justify-start">
-                    <p className="text-slate-400">{`${aDay} ${aMonth}`}</p>
-                    <p className="text-2xl">{aYear}</p>
+                    <p className="text-slate-400">{`${raDay} ${raMonth}`}</p>
+                    <p className="text-2xl">{raYear}</p>
                   </div>
                 </div>
               </div>

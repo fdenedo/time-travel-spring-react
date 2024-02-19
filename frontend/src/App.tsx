@@ -10,7 +10,6 @@ function App() {
   const fetchJourneys = async (formData: JourneySearchFormData) => {
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
-      // params.append(key, value);
       if (value instanceof Date) {
         params.append(key, value.toISOString().split('T')[0]);
       } else {
@@ -40,7 +39,7 @@ function App() {
       <div className='search-results flex flex-col items-center mt-16'>
         <h1>Journeys</h1>
         {journeys.map(journey =>
-          <div key={journey.departureTime}>
+          <div key={journey.outboundDepartureTime}>
             <JourneyCard journey={journey} />
           </div>
         )}
