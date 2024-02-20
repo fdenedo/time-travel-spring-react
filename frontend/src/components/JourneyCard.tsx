@@ -49,7 +49,7 @@ const JourneyCard = ({ journey }: JourneyProps) => {
   return (
       <Card className="w-[60rem] my-8">
         <CardContent className="p-2 flex flex-row">
-          <div className="journey-details flex flex-grow flex-col justify-between">
+          <div className="journey-details pr-10 flex w-[70%] flex-col justify-between">
             <div className="first-journey-details p-4 flex flex-row justify-between items-top">
               <div className="provider-section flex flex-col justify-center">
                 <h2>{journey.providerName}</h2>
@@ -63,7 +63,7 @@ const JourneyCard = ({ journey }: JourneyProps) => {
                   </div>
                 </div>
                 <div className="separator flex flex-col justify-center items-center mx-6">
-                  <div className="h-[2px] w-32 bg-slate-600"></div>
+                  <div className="h-[2px] w-28 bg-slate-600"></div>
                 </div>
                 <div className="journey-to flex flex-col justify-start">
                   <p className="text-slate-400">{`${aDay} ${aMonth}`}</p>
@@ -92,9 +92,9 @@ const JourneyCard = ({ journey }: JourneyProps) => {
               </div>
             }
           </div>
-          <div className="price border-l px-12 flex flex-col justify-center space-y-2">
+          <div className="price border-l px-12 flex flex-col w-[30%] justify-center items-center space-y-2">
             <p className="text-xl"><span>£</span>{formatPrice(journey.totalPrice)}</p>
-            <Button>View</Button>
+            <Button className="w-[6rem]">View</Button>
           </div>
         </CardContent>
         <CardFooter className="bg-slate-100 flex flex-row items-center p-2 pl-6">
