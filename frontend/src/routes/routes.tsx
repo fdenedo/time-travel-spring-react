@@ -6,16 +6,16 @@ import Journeys from '@/pages/Journeys';
 import { Route, Routes } from 'react-router-dom';
 
 const AppRoutes = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<Root />}>
-          <Route index element={<Home />} />
-          <Route path="/journeys" element={<Journeys />} />
-          <Route path="/journeys/search" element={<JourneySearch />} />
-          <Route path="/journeys/:id" element={<JourneyDetails />} />
-        </Route>
-      </Routes>
-    );
-  };
+  return (
+    <Routes>
+      <Route path="/" element={<Root />}>
+        <Route index element={<Home />} />
+        <Route path="/journeys" element={<Journeys />} />
+        <Route path="/journeys/search" element={<JourneySearch />} />
+        <Route path="/journeys/:id" element={<JourneyDetails />} />
+      </Route>
+    </Routes>
+  );
+};
   
-  export default AppRoutes;
+export default AppRoutes;
