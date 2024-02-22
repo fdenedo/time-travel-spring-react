@@ -58,8 +58,8 @@ const JourneyCard = ({ journey }: JourneyProps) => {
                 <div className="journey-from flex flex-col justify-start">
                   <p className="text-slate-400">{`${dDay} ${dMonth}`}</p>
                   <p className="text-2xl">{dYear}</p>
-                  <div className="rounded-lg bg-slate-400 p-[1px] mt-2">
-                    <p className="text-amber-50">{dTime}</p>
+                  <div className="rounded-lg bg-slate-200 p-[1px] mt-2">
+                    <p className="text-slate-600">{dTime}</p>
                   </div>
                 </div>
                 <div className="separator flex flex-col justify-center items-center mx-6">
