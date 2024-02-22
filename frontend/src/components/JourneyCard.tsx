@@ -19,12 +19,12 @@ interface JourneyProps {
   journey: Journey
 }
 
-interface DateTimeDisplayProps {
+export interface DateTimeDisplayProps {
   date: Date
   time?: string
 }
 
-const DateTimeDisplay = ({
+export const DateTimeDisplay = ({
   date, 
   time
 }: DateTimeDisplayProps) => {
@@ -44,7 +44,7 @@ const DateTimeDisplay = ({
   )
 }
 
-const Separator = () => {
+export const Separator = () => {
   return (
     <div className="separator flex flex-col justify-center items-center mx-6">
       <div className="h-[2px] w-28 bg-slate-600"></div>
