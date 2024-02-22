@@ -19,19 +19,40 @@ interface JourneyProps {
   journey: Journey
 }
 
+interface DateTimeDisplayProps {
+  date: Date
+  time?: string
+}
+
+const DateTimeDisplay = ({
+  date, 
+  time
+}: DateTimeDisplayProps) => {
+  const [, month, day, year] = new Date(date).toDateString().split(' ');
+  const displayTime = time?.split(':').slice(0, -1).join(':');
+
+  return (
+    <div className="journey-from flex flex-col justify-start">
+      <p className="text-slate-400">{`${day} ${month}`}</p>
+      <p className="text-2xl">{year}</p>
+      {displayTime && 
+        <div className="rounded-lg bg-slate-200 p-[1px] mt-2">
+          <p className="text-slate-600">{displayTime}</p>
+        </div>
+      }
+    </div>
+  )
+}
+
+const Separator = () => {
+  return (
+    <div className="separator flex flex-col justify-center items-center mx-6">
+      <div className="h-[2px] w-28 bg-slate-600"></div>
+    </div>
+  )
+}
+
 const JourneyCard = ({ journey }: JourneyProps) => {
-  const [, dMonth, dDay, dYear] = new Date(journey.departureDate).toDateString().split(' ');
-  const dTime = journey.departureTime.split(':').slice(0, -1).join(':');
-  const [, aMonth, aDay, aYear] = new Date(journey.targetArrivalDate).toDateString().split(' ');
-
-  const isReturnJourney = journey.targetReturnArrivalDate !== null || undefined;
-  const [, rdMonth, rdDay, rdYear] = journey.targetReturnDepartureDate 
-      && new Date(journey.targetReturnDepartureDate).toDateString().split(' ')
-      || [null, null, null, null];
-  const [, raMonth, raDay, raYear] = journey.targetReturnArrivalDate 
-      && new Date(journey.targetReturnArrivalDate).toDateString().split(' ')
-      || [null, null, null, null];
-
   function formatPrice(price: number) {
     let formattedPrice;
     if (price >= 1e9) {
@@ -55,39 +76,20 @@ const JourneyCard = ({ journey }: JourneyProps) => {
                 <h2>{journey.providerName}</h2>
               </div>
               <div className="time-section flex flex-row">
-                <div className="journey-from flex flex-col justify-start">
-                  <p className="text-slate-400">{`${dDay} ${dMonth}`}</p>
-                  <p className="text-2xl">{dYear}</p>
-                  <div className="rounded-lg bg-slate-200 p-[1px] mt-2">
-                    <p className="text-slate-600">{dTime}</p>
-                  </div>
-                </div>
-                <div className="separator flex flex-col justify-center items-center mx-6">
-                  <div className="h-[2px] w-28 bg-slate-600"></div>
-                </div>
-                <div className="journey-to flex flex-col justify-start">
-                  <p className="text-slate-400">{`${aDay} ${aMonth}`}</p>
-                  <p className="text-2xl">{aYear}</p>
-                </div>
+                <DateTimeDisplay date={new Date(journey.departureDate)} time={journey.departureTime}/>
+                <Separator />
+                <DateTimeDisplay date={new Date(journey.targetArrivalDate)}/>
               </div>
             </div>
-            {isReturnJourney && 
+            {journey.targetReturnDepartureDate && journey.targetReturnArrivalDate &&
               <div className="return-journey-details p-4 flex flex-row justify-between items-top">
                 <div className="provider-section flex flex-col justify-center">
                   <h2>{journey.providerName}</h2>
                 </div>
                 <div className="time-section flex flex-row">
-                  <div className="journey-from flex flex-col justify-start">
-                    <p className="text-slate-400">{`${rdDay} ${rdMonth}`}</p>
-                    <p className="text-2xl">{rdYear}</p>
-                  </div>
-                  <div className="separator flex flex-col justify-center items-center mx-6">
-                    <div className="h-[2px] w-32 bg-slate-600"></div>
-                  </div>
-                  <div className="journey-to flex flex-col justify-start">
-                    <p className="text-slate-400">{`${raDay} ${raMonth}`}</p>
-                    <p className="text-2xl">{raYear}</p>
-                  </div>
+                  <DateTimeDisplay date={new Date(journey.targetReturnDepartureDate)} />
+                  <Separator />
+                  <DateTimeDisplay date={new Date(journey.targetReturnArrivalDate)} />
                 </div>
               </div>
             }
