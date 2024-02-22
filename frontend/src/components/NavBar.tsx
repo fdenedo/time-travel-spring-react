@@ -15,6 +15,9 @@ export default function Navbar() {
                     <Link to={"/journeys/search"}>Search</Link>
                 </li>
                 <li>
+                    <Link to={"/journeys/982573"}>(Details)</Link>
+                </li>
+                <li>
                     Sign Up
                 </li>
                 <li>
