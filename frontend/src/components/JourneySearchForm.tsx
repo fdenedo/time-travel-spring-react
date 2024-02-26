@@ -20,8 +20,16 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
+import { FaClock } from "react-icons/fa";
 
 const formSchema = z.object({
     departureDate: z.coerce.date().min(new Date()),
@@ -91,7 +99,7 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center rounded-lg border p-8 shadow-sm">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center bg-white rounded-lg border p-8 shadow-sm">
             <div className="flex flex-col justify-start">
               <FormField 
                 control={form.control}
@@ -111,30 +119,32 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                 )}
               />
             </div>
-            <div className="flex flex-col space-y-8">
-              <div className="flex flex-row space-x-8 items-end">
+            <div className="flex flex-row space-x-8">
+              <div className="flex flex-row items-center space-x-[-16px]">
                 <FormField
                   control={form.control}
                   name="departureDate"
                   render={({ field }) => (
                     <FormItem className='flex flex-col'>
-                      <FormLabel>Departure Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
+                                "flex-row items-center w-[280px] px-6 py-8 text-lg font-semibold bg-white",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              <div className="flex flex-col items-start">
+                                <FormLabel className="block text-xs">Departure Date</FormLabel>
+                                {field.value ? (
+                                  format(field.value, "do MMMM yyyy")
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
+                              </div>
+                              <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -152,28 +162,36 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                     </FormItem>
                   )}
                 />
+                <Button 
+                  variant={"outline"}
+                  className="rounded-full z-10 w-13 h-13 aspect-square bg-white"
+                >
+                  <FaClock size={18} />
+                </Button>
                 <FormField
                   control={form.control}
                   name="arrivalDate"
                   render={({ field }) => (
                     <FormItem className='flex flex-col'>
-                      <FormLabel>Arrival Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
+                                "flex-row items-center w-[280px] px-6 py-8 text-lg font-semibold bg-white",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              <div className="flex flex-col items-start">
+                                <FormLabel className="block text-xs">Arrival Date</FormLabel>
+                                {field.value ? (
+                                  format(field.value, "do MMMM yyyy")
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
+                              </div>
+                              <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -190,15 +208,26 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                     </FormItem>
                   )}
                 />
+              </div>
+              <div className="flex flex-row space-x-8 items-end">
                 <FormField
                   control={form.control}
                   name="passengers"
                   render={({ field }) => (
                     <FormItem className='flex flex-col'>
-                      <FormLabel>Passengers</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
+                      <FormLabel className="text-xs">Passengers</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="1" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {Array.from({ length: 12 }, (_, index) => index + 1).map(i => {
+                            return <SelectItem key={i} value={i.toString()}>{i}</SelectItem>
+                          })}
+                        </SelectContent>
+                      </Select>
                     </FormItem>
                   )}
                 />
@@ -255,7 +284,7 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
               </div>}
             </div>
             <div className="flex flex-col justify-center">
-              <Button type="submit">Search</Button>
+              <Button className="search text-xl p-6" type="submit">Search</Button>
             </div>
           </form>
         </Form>

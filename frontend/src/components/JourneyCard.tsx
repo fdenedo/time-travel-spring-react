@@ -65,7 +65,20 @@ const JourneyCard = ({ journey }: JourneyProps) => {
         formattedPrice = price.toFixed(2);
     }
     return formattedPrice.replace(/\.+$/, '');
-}
+  }
+
+  // TODO: change code to pick the correct logo without hard-coding
+  const Logo = () => {
+    if (journey.providerName === "Rewind") {
+      return <img className="w-[150px]" src="/rewind-logo.svg" alt="Rewind Logo" />;
+    }
+    else if (journey.providerName === "FirstTravel") {
+      return <img className="w-[150px]" src="/firsttravel-logo.svg" alt="FirstTravel Logo" />;
+    }
+    else {
+      return <h2>{journey.providerName}</h2>
+    }
+  }
   
   return (
       <Card className="w-[60rem] my-8">
@@ -73,7 +86,7 @@ const JourneyCard = ({ journey }: JourneyProps) => {
           <div className="journey-details pr-10 flex w-[70%] flex-col justify-between">
             <div className="first-journey-details p-4 flex flex-row justify-between items-top">
               <div className="provider-section flex flex-col justify-center">
-                <h2>{journey.providerName}</h2>
+                <Logo />
               </div>
               <div className="time-section flex flex-row">
                 <DateTimeDisplay date={new Date(journey.departureDate)} time={journey.departureTime}/>
