@@ -99,7 +99,7 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center bg-white rounded-lg border p-8 shadow-sm">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center bg-white rounded-lg border p-8">
             <div className="flex flex-col justify-start">
               <FormField 
                 control={form.control}
@@ -209,16 +209,16 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                   )}
                 />
               </div>
-              <div className="flex flex-row space-x-8 items-end">
+              <div className="flex flex-row space-x-8 items-center">
                 <FormField
                   control={form.control}
                   name="passengers"
                   render={({ field }) => (
-                    <FormItem className='flex flex-col'>
+                    <FormItem className='flex flex-col space-y-0'>
                       <FormLabel className="text-xs">Passengers</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border-0 shadow-none pl-1 pr-0 font-semibold">
                             <SelectValue placeholder="1" />
                           </SelectTrigger>
                         </FormControl>
@@ -284,7 +284,7 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
               </div>}
             </div>
             <div className="flex flex-col justify-center">
-              <Button className="search text-xl p-6" type="submit">Search</Button>
+              <Button className="search text-lg p-6" type="submit">Search</Button>
             </div>
           </form>
         </Form>
