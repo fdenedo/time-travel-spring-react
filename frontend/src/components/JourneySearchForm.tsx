@@ -120,94 +120,148 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
               />
             </div>
             <div className="flex flex-row space-x-8">
-              <div className="flex flex-row items-center space-x-[-16px]">
-                <FormField
-                  control={form.control}
-                  name="departureDate"
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "flex-row items-center w-[280px] px-6 py-8 text-lg font-semibold bg-white",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              <div className="flex flex-col items-start">
-                                <FormLabel className="block text-xs">Departure Date</FormLabel>
-                                {field.value ? (
-                                  format(field.value, "do MMMM yyyy")
-                                ) : (
-                                  <span>Pick a date</span>
+              <div className="flex flex-col space-y-4">
+                <div className="flex flex-row items-center space-x-[-16px]">
+                  <FormField
+                    control={form.control}
+                    name="departureDate"
+                    render={({ field }) => (
+                      <FormItem className='flex flex-col'>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "flex-row items-center w-[280px] px-6 py-8 text-lg font-medium bg-white",
+                                  !field.value && "text-muted-foreground"
                                 )}
-                              </div>
-                              <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) => date <= new Date()}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button 
-                  variant={"outline"}
-                  className="rounded-full z-10 w-13 h-13 aspect-square bg-white"
-                >
-                  <FaClock size={18} />
-                </Button>
-                <FormField
-                  control={form.control}
-                  name="arrivalDate"
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "flex-row items-center w-[280px] px-6 py-8 text-lg font-semibold bg-white",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              <div className="flex flex-col items-start">
-                                <FormLabel className="block text-xs">Arrival Date</FormLabel>
-                                {field.value ? (
-                                  format(field.value, "do MMMM yyyy")
-                                ) : (
-                                  <span>Pick a date</span>
+                              >
+                                <div className="flex flex-col items-start">
+                                  <FormLabel className="block text-xs">Departure Date</FormLabel>
+                                  {field.value ? (
+                                    format(field.value, "do MMMM yyyy")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                </div>
+                                <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={(date) => date <= new Date()}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button 
+                    variant={"outline"}
+                    className="rounded-full z-10 w-13 h-13 aspect-square bg-white"
+                  >
+                    <FaClock size={18} />
+                  </Button>
+                  <FormField
+                    control={form.control}
+                    name="arrivalDate"
+                    render={({ field }) => (
+                      <FormItem className='flex flex-col'>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "flex-row items-center w-[280px] px-6 py-8 text-lg font-medium bg-white",
+                                  !field.value && "text-muted-foreground"
                                 )}
-                              </div>
-                              <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
-                            </Button>
+                              >
+                                <div className="flex flex-col items-start">
+                                  <FormLabel className="block text-xs">Arrival Date</FormLabel>
+                                  {field.value ? (
+                                    format(field.value, "do MMMM yyyy")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                </div>
+                                <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                {form.getValues("needReturn") && 
+                  <div className="flex flex-row space-x-8 items-end">
+                    <FormField
+                      control={form.control}
+                      name="returnDate"
+                      render={({ field }) => (
+                        <FormItem className='flex flex-col'>
+                          <FormLabel>Return Date</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-[240px] pl-3 text-left font-normal",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                onSelect={field.onChange}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="journeyLengthInDays"
+                      render={({ field }) => (
+                        <FormItem className='flex flex-col'>
+                          <FormLabel>Journey Length (Days)</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
                           </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                }
               </div>
               <div className="flex flex-row space-x-8 items-center">
                 <FormField
@@ -218,7 +272,7 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                       <FormLabel className="text-xs">Passengers</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
                         <FormControl>
-                          <SelectTrigger className="border-0 shadow-none pl-1 pr-0 font-semibold">
+                          <SelectTrigger className="border-0 shadow-none pl-1 pr-0 font-medium">
                             <SelectValue placeholder="1" />
                           </SelectTrigger>
                         </FormControl>
@@ -232,56 +286,6 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                   )}
                 />
               </div>
-              {form.getValues("needReturn") && <div className="flex flex-row space-x-8 items-end">
-                <FormField
-                  control={form.control}
-                  name="returnDate"
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Return Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            onSelect={field.onChange}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="journeyLengthInDays"
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Journey Length (Days)</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>}
             </div>
             <div className="flex flex-col justify-center">
               <Button className="search text-lg p-6" type="submit">Search</Button>
