@@ -29,6 +29,8 @@ public class TimeTravelServiceEntity {
     @Field(name = "date_ranges")
     private List<AbstractDateRange> dateRanges;
 
+    // TODO: It doesn't really make sense to just list a single and a return price, but instead to create algorithms to
+    // generate these prices automatically
     @Field(name = "single_price")
     private double singlePrice;
 
