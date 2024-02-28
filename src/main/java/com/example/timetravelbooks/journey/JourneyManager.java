@@ -12,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class JourneyManager {
 
     public LocalTime generateRandomTime() {
+        // Time can be generated from date, as well as some kind of user token, the service ID and something else
+        // use the hex value of the code (somehow)
         int hour = ThreadLocalRandom.current().nextInt(0, 24);
         int minute = ThreadLocalRandom.current().nextInt(0, 60);
 
