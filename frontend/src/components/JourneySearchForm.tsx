@@ -217,35 +217,38 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
                       name="returnDate"
                       render={({ field }) => (
                         <FormItem className='flex flex-col'>
-                          <FormLabel>Return Date</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
                                   variant={"outline"}
                                   className={cn(
-                                    "w-[240px] pl-3 text-left font-normal",
+                                    "flex-row items-center w-[280px] px-6 py-8 text-lg font-medium bg-white",
                                     !field.value && "text-muted-foreground"
                                   )}
                                 >
-                                  {field.value ? (
-                                    format(field.value, "PPP")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
-                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  <div className="flex flex-col items-start">
+                                    <FormLabel className="block text-xs">Return Date</FormLabel>
+                                    {field.value ? (
+                                      format(field.value, "do MMMM yyyy")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                  </div>
+                                  <CalendarIcon className="ml-auto h-5 w-5 opacity-50" />
                                 </Button>
                               </FormControl>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0" align="start">
                               <Calendar
                                 mode="single"
+                                selected={field.value}
                                 onSelect={field.onChange}
                               />
                             </PopoverContent>
                           </Popover>
-                          <FormMessage />
-                        </FormItem>
+                        <FormMessage />
+                      </FormItem>
                       )}
                     />
                     <FormField
