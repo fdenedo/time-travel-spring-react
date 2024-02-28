@@ -17,9 +17,10 @@ export default function Home() {
 
     return (
         <>
+            <h2 className="text-left">Book Your Time Journey</h2>
             <JourneySearchForm onSearch={handleSearch} />
             <div className='search-results flex flex-col items-center mt-16'>
-                <h1>Journeys</h1>
+                {journeys.length > 0 && <p>{`Showing ${journeys.length} results`}</p>}
                 {journeys.map(journey =>
                 <div key={journey.serviceId}>
                     <JourneyCard journey={journey} />
