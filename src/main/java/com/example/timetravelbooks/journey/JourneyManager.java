@@ -25,7 +25,7 @@ public class JourneyManager {
     }
 
     public JourneyResponse createJourneyFromService(
-            TimeTravelServiceSummary service,
+            TimeTravelServiceSummary serviceSummary,
             LocalDate departureDate,
             LocalDate arrivalDate,
             int passengers,
@@ -39,17 +39,17 @@ public class JourneyManager {
         LocalDate returnDepartureDate = null;
 
         if (isReturnJourney) {
-            totalPrice = passengers * service.getReturnPrice();
+            totalPrice = passengers * serviceSummary.getReturnPrice();
             journeyLength = Period.ofDays(journeyLengthInDays);
             returnDepartureDate = calculateReturnDepartureDate(arrivalDate, journeyLength);
         } else {
-            totalPrice = passengers * service.getSinglePrice();
+            totalPrice = passengers * serviceSummary.getSinglePrice();
         }
 
         return new JourneyResponse(
-                service.getId(),
-                service.getProviderName(),
-                service.getTimeMachineMakeAndModel(),
+                serviceSummary.getId(),
+                serviceSummary.getProviderName(),
+                serviceSummary.getTimeMachineMakeAndModel(),
                 departureDate,
                 generateRandomTime(),
                 arrivalDate,
