@@ -1,6 +1,7 @@
 package com.example.timetravelbooks.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Represents a date range from some start date to some end date. This interface provides methods for checking if a
@@ -41,7 +42,24 @@ public abstract class AbstractDateRange {
      * @return          true if this.startDate <= dateRange.startDate && this.endDate >= dateRange.endDate
      */
     public boolean fullyContainsDateRange(AbstractDateRange dateRange) {
-        return !(dateRange.getStartDate().isBefore(this.getStartDate()) || dateRange.getEndDate().isAfter(this.getEndDate()));
+        return !(this.equals(dateRange)
+                || dateRange.getStartDate().isBefore(this.getStartDate())
+                || dateRange.getEndDate().isAfter(this.getEndDate())
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractDateRange dateRange = (AbstractDateRange) o;
+        return Objects.equals(this.getStartDate(), dateRange.getStartDate())
+                && Objects.equals(this.getEndDate(), dateRange.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getStartDate(), this.getEndDate());
     }
 
 }

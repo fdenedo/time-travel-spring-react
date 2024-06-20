@@ -1,7 +1,6 @@
 package com.example.timetravelbooks.model;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Represents a date range between the current date and some date in the future.
@@ -34,18 +33,5 @@ public class DateRangeFromPresent extends AbstractDateRange {
                 "startDate=" + LocalDate.now() + " (current)" +
                 ", endDate=" + endDate +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DateRangeFromPresent that = (DateRangeFromPresent) o;
-        return Objects.equals(endDate, that.endDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(endDate);
     }
 }
