@@ -21,7 +21,7 @@ public class DateRangeConverters {
 
         @NonNull
         @Override
-        public String convert(AbstractDateRange source) {
+        public String convert(@NonNull AbstractDateRange source) {
             String startDate = source instanceof DateRangeFromPresent ? PRESENT : source.getStartDate().toString();
             String endDate = source instanceof DateRangeToPresent ? PRESENT : source.getEndDate().toString();
 

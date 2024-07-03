@@ -99,7 +99,9 @@ export function JourneySearchForm({ onSearch }: JourneySearchFormProps) {
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center bg-white rounded-lg border p-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row space-x-6 justify-center bg-white rounded-lg p-8 
+          border-none shadow-md
+          transition ease-in-out">
             <div className="flex flex-col justify-start">
               <FormField 
                 control={form.control}

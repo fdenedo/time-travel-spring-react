@@ -17,7 +17,9 @@ export default function Home() {
 
     return (
         <>
-            <h2 className="text-left">Book Your Time Journey</h2>
+            <div className="hero h-[540px] w-full bg-slate-300 p-12 mb-16">
+                <h2 className="text-left">Book Your Time Journey</h2>
+            </div>
             <JourneySearchForm onSearch={handleSearch} />
             <div className='search-results flex flex-col items-center mt-16'>
                 {journeys.length > 0 && <p>{`Showing ${journeys.length} results`}</p>}

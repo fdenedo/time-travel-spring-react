@@ -28,9 +28,9 @@ public class TTSPInitializer {
     }
 
     private List<TimeTravelServiceProviderEntity> createTTSPs() {
-        try (InputStream serviceprovidersFileAsStream = getClass().getResourceAsStream("/static/ttsprovider.csv")) {
-            if (serviceprovidersFileAsStream == null) throw new NullPointerException("Could not find CSV file for service providers");
-            Reader reader = new InputStreamReader(serviceprovidersFileAsStream);
+        try (InputStream serviceProvidersFileAsStream = getClass().getResourceAsStream("/static/ttsprovider.csv")) {
+            if (serviceProvidersFileAsStream == null) throw new NullPointerException("Could not find CSV file for service providers");
+            Reader reader = new InputStreamReader(serviceProvidersFileAsStream);
             return new CsvToBeanBuilder<TTSPCsvRepr>(reader)
                     .withType(TTSPCsvRepr.class)
                     .build()
